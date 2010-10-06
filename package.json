@@ -1,0 +1,36 @@
+{
+  "name": "villain",
+  "version": "0.1.0",
+  "description": "The evil library for real-time games.",
+
+  "homepage": "http://stephank.github.com/villain/",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/stephank/villain.git"
+  },
+  "author": {
+    "name": "Stéphan Kochen",
+    "email": "stephan@kochen.nl",
+    "url": "http://stephan.kochen.nl/"
+  },
+
+  "engines: ": {
+    "node": ">=0.2.0"
+  },
+
+  "main": "./lib/index",
+  "modules": {
+    "loop": "./lib/loop",
+    "struct": "./lib/struct",
+    "build/cake": "./lib/build/cake",
+    "world/object": "./lib/world/object",
+    "world/local": "./lib/world/local",
+    "world/net/object": "./lib/world/net/object",
+    "world/net/local": "./lib/world/net/local",
+    "world/net/server": "./lib/world/net/server",
+    "world/net/client": "./lib/world/net/client"
+  },
+  "bin": {
+    "villain": "./bin/villain"
+  }
+}
