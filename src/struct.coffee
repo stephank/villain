@@ -29,7 +29,6 @@ toUint32 = (n) -> [
      n & 0x000000FF
   ]
 
-
 # And the reverse of the above. Each takes an array of bytes, and an offset.
 
 fromUint8  = (d, o) -> d[o]
@@ -86,7 +85,6 @@ buildPacker = ->
 
   retval
 
-
 # The opposite of the above. Takes an array of bytes and an optional offset, and returns a
 # generator which can be repeatedly called to get values from the input data. For example:
 #
@@ -130,7 +128,7 @@ buildUnpacker = (data, offset) ->
 
 
 ## Non-streaming packers
-#
+
 # These work more like Python's `struct`.
 
 # The `pack` function takes a format string, and the respective values as its arguments. It then
@@ -151,6 +149,7 @@ unpack = (fmt, data, offset) ->
 
 
 ## Exports
+
 exports.buildPacker = buildPacker
 exports.buildUnpacker = buildUnpacker
 exports.pack = pack

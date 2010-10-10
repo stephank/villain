@@ -1,3 +1,6 @@
+# The implementation of the `villain` command-line application, which generates a basic project
+# from a template.
+
 sys = require 'sys'
 fs  = require 'fs'
 {VERSION} = require '../index'

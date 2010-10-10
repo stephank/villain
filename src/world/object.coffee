@@ -1,14 +1,12 @@
-{EventEmitter}  = require 'events'
+{EventEmitter} = require 'events'
 
-
-# The types indexed by their charId.
-types = {}
 
 ## WorldObject
 
 # The base class for all objects living in the game world.
 class WorldObject extends EventEmitter
-  # The back-reference to the `World`.
+
+  # The back-reference to the `World` instance this object belongs to.
   world: null
 
   # An index in the world object list for this object.
@@ -64,7 +62,7 @@ class WorldObject extends EventEmitter
   # We can't really create proxies in JavaScript (yet), so this tries to make things as painless
   # as possible. The `attribute` of this object is set to a thin wrapper. You may dereference
   # simply by doing: `@other.$.something`. However, to add an event listener on the other object
-  # you don't dereference, but instead do: `@other.on 'someEvent', someHandler`.
+  # you do *not* dereference, but instead do: `@other.on 'someEvent', someHandler`.
   ref: (attribute, other) ->
     return this[attribute] if this[attribute]?.$ == other
     this[attribute]?.clear()

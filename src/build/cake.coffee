@@ -1,10 +1,12 @@
-# FIXME: watch functionality, as in 'coffee -w ...'
+# This module contains helpers for Cakefiles of villain projects. Villain itself uses it too.
 
 fs      = require 'fs'
 path    = require 'path'
 {spawn} = require 'child_process'
 coffee  = require 'coffee-script'
 villain = require '../index'
+
+# FIXME: watch functionality, as in 'coffee -w ...'
 
 
 # Recursively compile coffee files in `indir`, place them in `outdir`.
@@ -30,10 +32,9 @@ compileDirectory = (indir, outdir) ->
       stats = fs.statSync inpath
       compileDirectory(inpath, outpath) if stats.isDirectory()
 
-# Return an array of the relative dependencies of a given module. The array contains pairs,
-# containing the dependency module name and file name. The optional `env` is a hash mapping
-# external libraries to their base include path. Sources from these libraries will be included
-# in the results.
+# Return an array of the dependencies of a given module. The array contains pairs of the module
+# names and file names. The optional `env` is a hash mapping external libraries to their base
+# include path. Only relative dependencies and dependencies from `env` are included in the results.
 determineDependencies = (module, filename, code, env) ->
   env ||= {}
   retval = []
@@ -92,8 +93,7 @@ iterateDependencyTree = (module, filename, state, cb) ->
     iterateDependencyTree(mod, file, state, cb)
   return
 
-# Create a bundle of sources, and write it to the output stream `output`. The options hash can
-# contain three items:
+# Create a bundle of sources, and write it to the stream `output`. The options contains:
 #
 # * `modules`: The base modules to compile. This is a mapping of module names to their source
 #   files. All of these files will be inspected for dependencies and bundled.
@@ -126,7 +126,7 @@ bundleSources = (output, options) ->
 
 # Wraps a writable stream with a JavaScript compressor. The compressor is activated by the user
 # using environment variables `CLOSURE` or `UGLIFYJS`.
-compressorStream = (wrappee) ->
+createCompressorStream = (wrappee) ->
   sub = null
   if closure = process.env.CLOSURE
     sub = spawn 'java', ['-jar', closure]
@@ -148,8 +148,11 @@ compressorStream = (wrappee) ->
   else
     wrappee
 
+# The helper used to build the client bundle in a basic Villain project set-up. It includes the
+# browser-side CommonJS and EventEmitter libraries, bundles required Villain sources, and applies
+# a compressor if one was specified.
 simpleBundle = (bundlepath, modules) ->
-  output = compressorStream fs.createWriteStream bundlepath
+  output = createCompressorStream fs.createWriteStream bundlepath
   villainLib = villain.getLibraryPath()
   bundleSources output,
     env:
@@ -168,5 +171,5 @@ exports.compileDirectory = compileDirectory
 exports.determineDependencies = determineDependencies
 exports.wrapModule = wrapModule
 exports.bundleSources = bundleSources
-exports.compressorStream = compressorStream
+exports.createCompressorStream = createCompressorStream
 exports.simpleBundle = simpleBundle

@@ -37,8 +37,8 @@ class BaseWorld
 
   #### Abstract methods
 
-  # The `register` method registers a type of object with the world. It is usually called on the
-  # prototype of the `World`.
+  # The `registerType` method registers a type of object with the world. It is usually called on
+  # the prototype of the `World`.
   registerType: (type) ->
 
   # An object is added to the world with `world.spawn(MyObject, params...);`. The first parameter
@@ -55,4 +55,5 @@ class BaseWorld
 
 
 ## Exports
+
 module.exports = BaseWorld
