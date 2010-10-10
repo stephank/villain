@@ -10,7 +10,7 @@ class NetLocalWorld extends BaseWorld
   spawn: (type, args...) ->
     obj = @insert new type(this)
     obj.spawn(args...)
-    obj.anySpawn
+    obj.anySpawn()
     obj
 
   update: (obj) ->
