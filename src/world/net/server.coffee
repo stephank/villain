@@ -46,14 +46,20 @@ class ServerWorld extends BaseWorld
 
   #### Object synchronization
 
-  # Serializes all objects into one large data block to be sent to clients. The optional
-  # `isInitial` flag should be set if all objects should be dumped as if constructed. This is
-  # useful when sending the initial update to clients.
-  dump: (isInitial) ->
+  # Serializes an object's state into a data block to be sent to clients. The optional `isInitial`
+  # flag should be set to force the `isCreate` flag to true in the `serialization` method. This is
+  # useful when sending an initial update to clients.
+  dump: (obj, isInitial) ->
+    isCreate = isInitial or obj._net_new
+    obj._net_new = no
+    @serialize(obj, isCreate)
+
+  # Serializes all objects' state into one large data block. This is used to send complete updates
+  # for a single game tick, or the initial state packet.
+  dumpTick: (isInitial) ->
     data = []
     for obj in @objects
-      data = data.concat @serialize(obj, isInitial or obj._net_new)
-      obj._net_new = no
+      data = data.concat @dump(obj, isInitial)
     data
 
   # The `serialize` helper builds the generator used for serialization and passes it to the
