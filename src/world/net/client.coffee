@@ -74,6 +74,7 @@ class ClientWorld extends BaseWorld
   # update message, at which point events are emitted.
   netSpawn: (data, offset) ->
     type = @types[data[offset]]
+    # assert: type != undefined
     obj = @insert new type(this)
     obj._net_transient = no
     obj._net_new = yes

@@ -24,6 +24,7 @@ class ServerWorld extends BaseWorld
     @changes = []
 
   spawn: (type, args...) ->
+    # assert: obj._net_type_idx != undefined
     obj = @insert new type(this)
     @changes.push ['create', obj._net_type_idx]
     obj._net_new = yes
@@ -50,6 +51,7 @@ class ServerWorld extends BaseWorld
   # flag should be set to force the `isCreate` flag to true in the `serialization` method. This is
   # useful when sending an initial update to clients.
   dump: (obj, isInitial) ->
+    # assert: not (isInitial and obj._net_new)
     isCreate = isInitial or obj._net_new
     obj._net_new = no
     @serialize(obj, isCreate)

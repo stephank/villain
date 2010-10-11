@@ -21,6 +21,7 @@ class BaseWorld
   # you will want to use `spawn` and `destroy` instead.
 
   insert: (obj) ->
+    # assert: obj.idx == null
     for other, i in @objects
       break if obj.updatePriority > other.updatePriority
     @objects.splice(i, 0, obj)
@@ -29,6 +30,7 @@ class BaseWorld
     obj
 
   remove: (obj) ->
+    # assert: obj.idx != null
     @objects.splice(obj.idx, 1)
     for i in [obj.idx...@objects.length]
       @objects[i].idx = i
