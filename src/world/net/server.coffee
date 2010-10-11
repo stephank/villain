@@ -26,7 +26,7 @@ class ServerWorld extends BaseWorld
   spawn: (type, args...) ->
     # assert: obj._net_type_idx != undefined
     obj = @insert new type(this)
-    @changes.push ['create', obj._net_type_idx]
+    @changes.push ['create', obj, obj.idx]
     obj._net_new = yes
     obj.spawn(args...)
     obj.anySpawn()
@@ -38,7 +38,7 @@ class ServerWorld extends BaseWorld
     obj.emit 'anyUpdate'
 
   destroy: (obj) ->
-    @changes.push ['destroy', obj.idx]
+    @changes.push ['destroy', obj, obj.idx]
     @remove obj
     obj.destroy()
     obj.emit 'destroy'
