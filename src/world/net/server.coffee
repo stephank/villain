@@ -24,7 +24,7 @@ class ServerWorld extends BaseWorld
     @changes = []
 
   spawn: (type, args...) ->
-    # assert: obj._net_type_idx != undefined
+    # assert: type::_net_type_idx != undefined
     obj = @insert new type(this)
     @changes.push ['create', obj, obj.idx]
     obj._net_new = yes
