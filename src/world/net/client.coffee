@@ -33,6 +33,7 @@ class ClientWorld extends BaseWorld
     obj
 
   update: (obj) ->
+    # assert: !obj._net_new
     obj.update()
     obj.emit 'update'
     obj.emit 'anyUpdate'
