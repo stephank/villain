@@ -4,7 +4,9 @@
 
 var EventEmitter = exports.EventEmitter = function() {};
 
-var isArray = Array.isArray;
+var isArray = Array.isArray || function(o) {
+  return Object.prototype.toString.call(o) === '[object Array]';
+};
 
 EventEmitter.prototype.emit = function (type) {
   // If there is no 'error' event listener then throw.
