@@ -1,11 +1,12 @@
 fs = require 'fs'
 coffee = require 'coffee-script'
+sys    = require 'sys'
 
 task 'bootstrap', 'Build the Villain circular dependencies.', ->
   fs.mkdirSync(dir, 0777) for dir in ['lib', 'lib/build']
   for module in ['index', 'build/cake']
     modulePath = "src/#{module}.coffee"
-    puts "bootstrap : #{modulePath}"
+    sys.puts "bootstrap : #{modulePath}"
     cscode = fs.readFileSync modulePath, 'utf-8'
     jscode = coffee.compile cscode, fileName: modulePath
     fs.writeFileSync "lib/#{module}.js", jscode, 'utf-8'

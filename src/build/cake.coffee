@@ -5,7 +5,7 @@ path    = require 'path'
 {spawn} = require 'child_process'
 coffee  = require 'coffee-script'
 villain = require '../index'
-
+sys     = require('sys')
 # FIXME: watch functionality, as in 'coffee -w ...'
 
 
@@ -19,13 +19,13 @@ compileDirectory = (indir, outdir) ->
     inpath = path.join indir, filename
     outpath = path.join outdir, filename
     if filename.match /\.coffee$/
-      puts "   coffee : #{inpath}"
+      sys.puts "   coffee : #{inpath}"
       outpath = outpath.replace /\.coffee$/, '.js'
       cscode = fs.readFileSync inpath, 'utf-8'
       jscode = coffee.compile cscode, fileName: inpath
       fs.writeFileSync outpath, jscode, 'utf-8'
     else if filename.match /\.js$/
-      puts "       js : #{inpath}"
+      sys.puts "       js : #{inpath}"
       jscode = fs.readFileSync inpath, 'utf-8'
       fs.writeFileSync outpath, jscode, 'utf-8'
     else
@@ -108,7 +108,7 @@ bundleSources = (output, options) ->
   additional = options.additional || []
 
   for filename in additional
-    puts "   bundle : #{filename}"
+    sys.puts "   bundle : #{filename}"
     code = fs.readFileSync filename, 'utf-8'
     output.write code
 
@@ -118,7 +118,7 @@ bundleSources = (output, options) ->
 
   for module, filename of modules
     iterateDependencyTree module, filename, state, (mod, file, code) ->
-      puts "   bundle : #{file}"
+      sys.puts "   bundle : #{file}"
       wrapped = wrapModule mod, code
       output.write wrapped
 
@@ -138,7 +138,7 @@ createCompressorStream = (wrappee) ->
   if sub
     realEnd = sub.end
     sub.end = ->
-      puts "  compress : #{name}"
+      sys.puts "  compress : #{name}"
       realEnd.apply sub, arguments
 
     sub.stdout.on 'data', (buffer) -> wrappee.write buffer

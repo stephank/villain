@@ -3,6 +3,7 @@
 
 sys = require 'sys'
 fs  = require 'fs'
+constants = require 'constants'
 {VERSION} = require '../index'
 
 
@@ -211,7 +212,7 @@ emptyDirectory = ->
   try
     empty = (fs.readdirSync(path).length == 0)
   catch e
-    throw e unless e.errno == process.ENOENT
+    throw e unless e.errno == constants.ENOENT
   empty
 
 # Create the stub application from the templates.
@@ -237,7 +238,7 @@ mkdir = (path) ->
   try
     fs.mkdirSync path, 0777
   catch e
-    throw e unless e.errno == process.EEXIST
+    throw e unless e.errno == constants.EEXIST
   sys.puts "      dir : #{path}"
 
 # Write a file, if it does not exist.
@@ -245,7 +246,7 @@ write = (path, str) ->
   try
     fs.statSync path
   catch e
-    throw e unless e.errno == process.ENOENT
+    throw e unless e.errno == constants.ENOENT
     fs.writeFileSync path, str, 'utf-8'
     sys.puts "   create : #{path}"
     return
