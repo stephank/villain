@@ -1,7 +1,8 @@
 {
   "name": "villain",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "The evil library for real-time games.",
+  "directories": { "lib" : "./lib" },
 
   "homepage": "http://stephank.github.com/villain/",
   "repository": {

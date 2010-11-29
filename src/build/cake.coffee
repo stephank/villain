@@ -1,11 +1,12 @@
 # This module contains helpers for Cakefiles of villain projects. Villain itself uses it too.
 
-fs      = require 'fs'
-path    = require 'path'
-{spawn} = require 'child_process'
-coffee  = require 'coffee-script'
-villain = require '../index'
-sys     = require('sys')
+fs        = require 'fs'
+path      = require 'path'
+constants = require 'constants'
+{spawn}   = require 'child_process'
+coffee    = require 'coffee-script'
+villain   = require '../index'
+sys       = require('sys')
 # FIXME: watch functionality, as in 'coffee -w ...'
 
 
@@ -78,7 +79,7 @@ iterateDependencyTree = (module, filename, state, cb) ->
     if fs.statSync(filename).isDirectory()
       filename = path.join filename, 'index.js'
   catch e
-    throw e unless e.errno == process.ENOENT
+    throw e unless e.errno == constants.ENOENT
   unless filename.match(/\.js$/)
     filename = "#{filename}.js"
   if filename.match(/\/index\.js$/) and not module.match(/\/index$/)
