@@ -103,7 +103,7 @@ tmplServerLauncher =
 
 tmplClientIndex =
   """
-    ClientWorld = require 'villain/world/client'
+    ClientWorld = require 'villain/world/net/client'
     objects = require '../objects/all'
 
 
@@ -125,7 +125,7 @@ tmplClientIndex =
 
 tmplServerIndex =
   """
-    ServerWorld = require 'villain/world/server'
+    ServerWorld = require 'villain/world/net/server'
     objects = require '../objects/all'
 
 
@@ -147,7 +147,7 @@ tmplServerIndex =
 
 tmplBaseObject =
   """
-    NetWorldObject = require 'villain/world/net_object'
+    NetWorldObject = require 'villain/world/net/object'
 
 
     # Your base class for all game objects.
