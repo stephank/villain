@@ -3,7 +3,7 @@
 
 sys = require 'sys'
 fs  = require 'fs'
-constants = require 'constants'
+constants = if process.ENOENT? then process else require 'constants'
 {VERSION} = require '../index'
 
 

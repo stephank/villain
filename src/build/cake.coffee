@@ -2,7 +2,7 @@
 
 fs        = require 'fs'
 path      = require 'path'
-constants = require 'constants'
+constants = if process.ENOENT? then process else require 'constants'
 {spawn}   = require 'child_process'
 coffee    = require 'coffee-script'
 villain   = require '../index'
