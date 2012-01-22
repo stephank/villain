@@ -14,14 +14,19 @@ do ->
                       window["#{prefix}CancelRequestAnimationFrame"]
           break
 
-      # Emulate by calling back immediately. No handle is returned.
-      unless actualRAF
-        actualRAF = (callback) ->
-          callback()
-          return null
+    # Browsers don't like it when these are called on anything other than window.
+    if actualRAF
+      actualRAF = actualRAF.bind window
+      actualCAF = actualCAF.bind window if actualCAF
 
-        actualCAF = (timeout) ->
-          return null
+    # Emulate by calling back immediately. No handle is returned.
+    unless actualRAF
+      actualRAF = (callback) ->
+        callback()
+        return null
+
+      actualCAF = (timeout) ->
+        return null
 
   else
     # Assume Node.js.
