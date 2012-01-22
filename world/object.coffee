@@ -21,7 +21,7 @@ class WorldObject extends EventEmitter
   # call to the actual constructor, and the world can thus keep track of the object.
   #
   # Any `spawn` parameters are passed to the `spawn` method of this object. The constructor itself
-  # is usually bare-bones, only receiving and setting the `sim` attribute, and adding listeners.
+  # is usually bare-bones, only receiving and setting the `world` attribute, and adding listeners.
   constructor: (@world) ->
 
   #### Abstract methods
@@ -54,9 +54,9 @@ class WorldObject extends EventEmitter
 
   #### Helpers
 
-  # This helper is used to track references to other objects. The idea is to keep track of events
-  # installed on the other object, which directly or indirectly (through a closure) hold a
-  # back-reference. If we go away, or the reference is cleared, these listeners will be cleaned
+  # This helper is used to track references to other objects. The idea is to keep track of
+  # listeners installed on the other object, which directly or indirectly (through a closure) hold
+  # a back-reference. If we go away, or the reference is cleared, these listeners will be cleaned
   # up as well.
   #
   # We can't really create proxies in JavaScript (yet), so this tries to make things as painless
