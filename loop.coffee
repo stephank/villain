@@ -52,9 +52,9 @@ do ->
 # with `start` and `stop` methods. The options are:
 #
 #  - `rate`: tick rate in milliseconds between ticks.
-#  - `tick`: function called for each tick.
-#  - `idle`: function called between tick processing, (not necessarily every tick.)
-#  - `frame`: function called at the browser's convenience to render a frame.
+#  - `tick`: function called for each simulation tick.
+#  - `idle`: function called between tick processing, (not necessarily on every tick.)
+#  - `frame`: function called when we are ready to draw a frame.
 #
 exports.createLoop = (options={}) ->
   lastTick = timerReq = frameReq = null
@@ -65,7 +65,7 @@ exports.createLoop = (options={}) ->
 
     # Simulate remaining ticks. We run ticks at a fixed rate, regardless of the actual timer
     # rate. We also allow for adjustments in rate, even between ticks inside this callback,
-    # hence and always reference `options`.
+    # hence we always reference `options`.
     now = Date.now()
     while now - lastTick >= options.rate
       options.tick()
@@ -76,8 +76,8 @@ exports.createLoop = (options={}) ->
     if options.frame and !frameReq
       frameReq = exports.requestAnimationFrame frameCallback
 
-    # Schedule next run. Use setTimeout so that the tick rate may be adjusted at runtime. Also
-    # has the advantage of stopping to loop when things go awry.
+    # Schedule next run. Use `setTimeout` so that the tick rate may be adjusted at runtime. Also
+    # has the advantage of stopping the loop when things go awry.
     timerReq = setTimeout timerCallback, options.rate
 
   # `requestAnimationFrame` callback.
